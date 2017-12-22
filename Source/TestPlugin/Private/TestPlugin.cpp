@@ -3,6 +3,8 @@
 #include "TestPluginPrivatePCH.h"
 #include "npp/dynamic.h"
 
+DEFINE_LOG_CATEGORY(TestPlugin)
+
 extern "C" {
 	#include "extern/extern.h"
 }
@@ -22,8 +24,10 @@ void FTestPlugin::StartupModule()
 {
 	// This code will execute after your module is loaded into memory (but after global variables are initialized, of course.)
 	auto value = new npp::DummyDynamicLoader();
+	UE_LOG(TestPlugin, Log, TEXT("npp::DummyDynamicLoader(): %d"), value);
 	delete value;
-  auto v2 = rs_trigger(100);
+	auto v2 = rs_trigger(100);
+	UE_LOG(TestPlugin, Log, TEXT("rs_trigger(100): %d"), v2);
 }
 
 
