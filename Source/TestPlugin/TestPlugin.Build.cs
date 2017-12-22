@@ -117,10 +117,10 @@ namespace UnrealBuildTool.Rules
 
 		/**
 		 * Print out a build message
-		 * Why error? Well, the UE masks all other errors. *shrug*
+		 * Why warning? It's yellow.
 		 */
 		private void Trace(string msg) {
-			Log.TraceError(Plugin + ": " + msg);
+			Log.TraceWarning(Plugin + ": " + msg);
 		}
 
 		/** Trace helper */
