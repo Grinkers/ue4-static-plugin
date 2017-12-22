@@ -7,7 +7,7 @@ namespace UnrealBuildTool.Rules
 {
 	public class TestPlugin : ModuleRules
 	{
-		public TestPlugin(TargetInfo target)
+		public TestPlugin(ReadOnlyTargetRules target) : base(target)
 		{
 			/** Setup an external C++ module */
 			LoadLibrary(target, "3rdparty/libnpp/src", "3rdparty/libnpp/build", "npp");
@@ -20,10 +20,10 @@ namespace UnrealBuildTool.Rules
 		}
 
 		/** Setup an external C++ module */
-		private void SetupLibNpp2(TargetInfo target) {
+		private void SetupLibNpp2(ReadOnlyTargetRules target) {
 
 			// Resolve import path
-			var base_path = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(RulesCompiler.GetModuleFilename(this.GetType().Name)), "../../libnpp"));
+			var base_path = Path.GetFullPath(Path.Combine(ModuleDirectory, "../../libnpp"));
 			var includes = Path.Combine(base_path, "src/npp");
 			string library = "undefined";
 			if ((target.Platform == UnrealTargetPlatform.Win64) || (target.Platform == UnrealTargetPlatform.Win32)) {
@@ -51,11 +51,11 @@ namespace UnrealBuildTool.Rules
 		}
 
 		/** Setup an external Rust module */
-		private void SetupLibExtern(TargetInfo target) {
+		private void SetupLibExtern(ReadOnlyTargetRules target) {
 		}
 
 		/** Perform all the normal module setup for plugin local c++ files. */
-		private void SetupLocal(TargetInfo target) {
+		private void SetupLocal(ReadOnlyTargetRules target) {
 			PublicIncludePaths.AddRange(new string[] {"Developer/TestPlugin/Public" });
 			PrivateIncludePaths.AddRange(new string[] {"Developer/TestPlugin/Private" });
 			PublicDependencyModuleNames.AddRange(new string[] {"Core"});
@@ -69,7 +69,7 @@ namespace UnrealBuildTool.Rules
 		 * @param build_path Relative build path, eg. 3rdparty/mylib/build
 		 * @param library_name Short library name, eg. mylib. Automatically expands to libmylib.a, mylib.lib, etc.
 		 */
-		private void LoadLibrary(TargetInfo target, string include_path, string build_path, string library_name) {
+		private void LoadLibrary(ReadOnlyTargetRules target, string include_path, string build_path, string library_name) {
 
 			// Add the include path
 			var full_include_path = Path.Combine(PluginPath, include_path);
@@ -137,7 +137,7 @@ namespace UnrealBuildTool.Rules
 		/** Get the absolute root to the plugin folder */
 		private string PluginPath {
 			get {
-				return Path.GetFullPath(Path.Combine(Path.GetDirectoryName(RulesCompiler.GetModuleFilename(this.GetType().Name)), "../.."));
+				return Path.GetFullPath(Path.Combine(ModuleDirectory, "../.."));
 			}
 		}
 
