@@ -17,6 +17,12 @@ if(APPLE)
     set(CMAKE_OSX_ARCHITECTURES "x86_64")
   endif()
 endif()
+if(UNIX)
+  set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+  ADD_DEFINITIONS(-fPIC)
+  set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
+  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+endif
 
 # Build library (dynamic)
 add_library(npp STATIC ${SOURCES})
